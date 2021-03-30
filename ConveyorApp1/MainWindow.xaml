@@ -8,9 +8,15 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Grid HorizontalAlignment="Left" Height="247" VerticalAlignment="Top" Width="772" Margin="10,10,0,0">
-            <Button Content="Randomize" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="25,375,0,-148" RenderTransformOrigin="0.311,2.807" Click="Button_Click"/>
-            <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="431" Margin="197,375,0,-151" TextChanged="TextBox_TextChanged"/>
-        </Grid>
+            <Button Content="Randomize" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="14,356,0,-129" RenderTransformOrigin="0.311,2.807" Click="Button_Click"/>
+            <TextBox x:Name="TextBox1" HorizontalAlignment="Left" Height="39" TextWrapping="Wrap" VerticalAlignment="Top" Width="431" Margin="223,356,0,-148" TextChanged="TextBox_TextChanged"/>
 
+            <TextBox x:Name="txtNum" x:FieldModifier="private" Margin="105,356,607,-148" Text="0" TextChanged="txtNum_TextChanged" />
+            <Button x:Name="cmdUp" x:FieldModifier="private" Margin="170,356,583,-128" Content="˄" Click="cmdUp_Click" RenderTransformOrigin="0.605,1.642" />
+            <Button x:Name="cmdDown" x:FieldModifier="private" Margin="170,380,583,-148"  Content="˅" Click="cmdDown_Click" RenderTransformOrigin="0.54,1.873" />
+
+
+
+        </Grid>
     </Grid>
 </Window>
