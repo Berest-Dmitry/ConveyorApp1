@@ -7,76 +7,97 @@ using System.Threading.Tasks;
 namespace ConveyorApp1
 {
     public class Functions
-    {
-        enum Events
+    {    
+        public static int Events()
         {
-            YO, 
-            nYO
-        }
-
-        public static int MDO()
-        {
-            int typeOfProcess;
-            double mdo = 0.3;
+            int typeOfEvent = 0; 
             var random = new Random();
 
-            if (random.NextDouble() < mdo)
+            double value = random.NextDouble();
+
+            if (value < 0.3)
             {
-                return 0;
+                typeOfEvent = 1;
             }
-            else
+            else if(value > 0.3 && value < 0.45)
             {
-                return 1;
+                typeOfEvent = 2;
             }
+            else if (value > 0.45 && value < 0.70)
+            {
+                typeOfEvent = 3;
+            }
+            else if (value > 0.70 && value < 1)
+            {
+                typeOfEvent = 4;
+            }
+
+            return typeOfEvent;
         }
-        public static int YO()
+    
+        public static int Duration(int typeOfCommands)
         {
-            int typeOfProcess;
-            double yo = 0.15;
+            int tact = 0;
             var random = new Random();
+            double value = random.NextDouble();
 
-            if (random.NextDouble() < yo)
+            switch (typeOfCommands)
             {
-                return 0;
+                case 1:
+                    if (value < 0.7)
+                    {
+                        tact = 5;
+                    }
+                    else if (value > 0.7 && value < 0.85)
+                    {
+                        tact = 2;
+                    }
+                    else if (value > 0.85 && value < 1)
+                    {
+                        tact = 1;
+                    }
+                    break;
+
+                case 2:
+                    if (value < 0.7)
+                    {
+                        tact = 2;
+                    }
+                    else if (value > 0.7 && value < 0.9)
+                    {
+                        tact = 5;
+                    }
+                    else if (value > 0.9 && value < 1)
+                    {
+                        tact = 1;
+                    }
+                    break;
+
+                case 3:
+                    if (value < 0.8)
+                    {
+                        tact = 2;
+                    }
+                    else if (value > 0.8 && value < 1)
+                    {
+                        tact = 1;
+                    }                   
+                    break;
+
+                case 4:
+                    if (value < 0.6)
+                    {
+                        tact = 2;
+                    }
+                    else if (value > 0.6 && value < 1)
+                    {
+                        tact = 1;
+                    }
+                    break;
             }
-            else
-            {
-                return 1;
-            }
+
+            return tact;
         }
-
-        public static int MSO()
-        {
-            int typeOfProcess;
-            double mso = 0.25;
-            var random = new Random();
-
-            if (random.NextDouble() < mso)
-            {
-                return 0;
-            }
-            else
-            {
-                return 1;
-            }
-        }
-
-        public static int DVP()
-        {
-            int typeOfProcess;
-            double dvp = 0.3;
-            var random = new Random();
-
-            if (random.NextDouble() < dvp)
-            {
-                return 0;
-            }
-            else
-            {
-                return 1;
-            }
-        }
-
         public static int InCache ()
         {
             double inCache = 0.75;
@@ -84,19 +105,37 @@ namespace ConveyorApp1
             
             if (random.NextDouble() < inCache)
             {
-                return 0; 
+                return 1; 
             }
             else
             {
-                return 1;
+                return 0;
             }
         }
 
+        public static string Commands(int duration, int typeOfEvent, int inCache)
+        {
+            string result = Convert.ToString(duration) + "Т(";
 
-        double probability = 0.5; // 50%
-        var random = new Random();
- 
-        if (random.NextDouble() < probability)
-            // Отображаем
+            if (inCache == 1)
+            {
+                result += "Кэш,";
+            }
+            else if (inCache == 0)
+            {
+                result += "Н.К.,";
+            }
+            
+            if (typeOfEvent == 3)
+            {
+                result += "УО)";
+            }
+            else
+            {
+                result += "-)";
+            }
+
+            return result;
+        }
     }
 }
