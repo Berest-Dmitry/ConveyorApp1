@@ -46,26 +46,19 @@ namespace ConveyorApp1
             if (MainWindow.ProcessCount > 1)
             {
                 processModels = new List<ProcessModel>(MainWindow.ProcessCount);
-                List<int> types = new List<int>(MainWindow.ProcessCount);
-                List<int> durations = new List<int>(MainWindow.ProcessCount); 
-                List<int> cases = new List<int>(MainWindow.ProcessCount);
+
                 for (int i = 0; i < ProcessCount; i++)
                 {
-                    var type = Functions.Events();
-                    types.Add(type);
-                    durations.Add(Functions.Duration(type));
-                    cases.Add(Functions.InCache());
-                }
+                    var typeOfEvent = Functions.Events();
+                    var duration = Functions.Duration(typeOfEvent);
+                    var inCache = Functions.InCache();
 
-                    for (int i = 0; i < ProcessCount; i++)
-                {                   
                     processModels.Add(new ProcessModel
                     {
-                        TypeOfEvent = types[i],
-                        Duration = durations[i],
-                        InCache = cases[i]
+                        TypeOfEvent = typeOfEvent,
+                        Duration = duration,
+                        InCache = inCache
                     });
-                    
                 }      
                 
                 foreach(var model in processModels)

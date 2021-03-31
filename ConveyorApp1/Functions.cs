@@ -8,10 +8,11 @@ namespace ConveyorApp1
 {
     public class Functions
     {    
-        public static Random  random = new Random();
         public static int Events()
         {
             int typeOfEvent = 0; 
+            var random = new Random();
+
             double value = random.NextDouble();
 
             if (value < 0.3)
@@ -37,6 +38,7 @@ namespace ConveyorApp1
         public static int Duration(int typeOfCommands)
         {
             int tact = 0;
+            var random = new Random();
             double value = random.NextDouble();
 
             switch (typeOfCommands)
@@ -99,6 +101,7 @@ namespace ConveyorApp1
         public static int InCache ()
         {
             double inCache = 0.75;
+            var random = new Random();
             
             if (random.NextDouble() < inCache)
             {
