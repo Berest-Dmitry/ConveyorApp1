@@ -8,26 +8,15 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Grid HorizontalAlignment="Left" Height="247" VerticalAlignment="Top" Width="772" Margin="10,10,0,0">
-            <Button Content="Randomize" ToolTip="Сгенерировать случайные команды" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="14,356,0,-129" RenderTransformOrigin="0.311,2.807" Click="Button_Click"/>
-            <TextBox x:Name="TextBox1" ToolTip="Введите команды" HorizontalAlignment="Left" Height="39" TextWrapping="Wrap" VerticalAlignment="Top" Width="431" Margin="223,356,0,-148" TextChanged="TextBox_TextChanged" />
+            <Button Content="Randomize" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="14,356,0,-129" RenderTransformOrigin="0.311,2.807" Click="Button_Click"/>
+            <TextBox x:Name="TextBox1" HorizontalAlignment="Left" Height="39" TextWrapping="Wrap" VerticalAlignment="Top" Width="431" Margin="223,356,0,-148" TextChanged="TextBox_TextChanged"/>
 
-
-
-            <TextBox x:Name="txtNum" ToolTip="Выберите кол-во команд" x:FieldModifier="private" Margin="105,356,607,-148" Text="0" TextChanged="txtNum_TextChanged" />
+            <TextBox x:Name="txtNum" x:FieldModifier="private" Margin="105,356,607,-148" Text="0" TextChanged="txtNum_TextChanged" />
             <Button x:Name="cmdUp" x:FieldModifier="private" Margin="170,356,583,-128" Content="˄" Click="cmdUp_Click" RenderTransformOrigin="0.605,1.642" />
             <Button x:Name="cmdDown" x:FieldModifier="private" Margin="170,380,583,-148"  Content="˅" Click="cmdDown_Click" RenderTransformOrigin="0.54,1.873" />
-            
-            <Button Content="Start" HorizontalAlignment="Left" Margin="696,375,0,-148" VerticalAlignment="Top" Width="75" Click="Start_Button_Click"/>
-            
-            <TextBox x:Name="txtNum_MP" ToolTip="Выберите частоту микропроцессора" x:FieldModifier="private" Margin="14,313,698,-93" Text="0" TextChanged="txtNum_TextChanged" />
-            <Button x:Name="cmdUp_MP" x:FieldModifier="private" Margin="79,313,674,-81" Content="˄" Click="cmdUp_Click_MP" RenderTransformOrigin="0.605,1.642" />
-            <Button x:Name="cmdDown_MP" x:FieldModifier="private" Margin="79,328,674,-94"  Content="˅" Click="cmdDown_Click_MP" RenderTransformOrigin="0.54,1.873" />
 
-            <TextBox x:Name="txtNum_SB" ToolTip="Выберите частоту системной шины" x:FieldModifier="private" Margin="264,313,448,-94" Text="0" TextChanged="txtNum_TextChanged" />
-            <Button x:Name="cmdUp_SB" x:FieldModifier="private" Margin="329,313,424,-81" Content="˄" Click="cmdUp_Click_SB" RenderTransformOrigin="0.605,1.642" />
-            <Button x:Name="cmdDown_SB" x:FieldModifier="private" Margin="329,328,424,-94"  Content="˅" Click="cmdDown_Click_SB" RenderTransformOrigin="0.54,1.873" />
+
 
         </Grid>
-
     </Grid>
 </Window>
