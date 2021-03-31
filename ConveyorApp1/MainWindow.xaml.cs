@@ -21,14 +21,26 @@ namespace ConveyorApp1
     public partial class MainWindow : Window
     {
         List<ProcessModel> processModels;
+        List<ProcessModel> resultProcessModels;
+        string ListOfCommands = "";
+        public string MyText
+        {
+            get { return ListOfCommands; }
+            set { ListOfCommands = value; }
+        }
         public static int ProcessCount = 0;
+
+        public static ProcessorProperties Processor;
         public MainWindow()
         {
             InitializeComponent();
-           // ListBox1.ItemsSource = MainWindow.ProcessCount;
-            
-            
-           
+            Processor = new ProcessorProperties()
+            {
+                MicroProcessorFreq = 0,
+                SystemBusFreq = 0,
+                MemoryFormula = 0
+            };
+            // ListBox1.ItemsSource = MainWindow.ProcessCount;                              
         }   
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -42,7 +54,7 @@ namespace ConveyorApp1
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             TextBox1.Clear();
-
+            TextBox1.Background = Brushes.Transparent;
             if (MainWindow.ProcessCount > 1)
             {
                 processModels = new List<ProcessModel>(MainWindow.ProcessCount);
@@ -68,9 +80,11 @@ namespace ConveyorApp1
                     
                 }      
                 
-                foreach(var model in processModels)
+                for(int i = 0; i < processModels.Count; i++)
                 {
-                    TextBox1.Text += Functions.Commands(model.Duration, model.TypeOfEvent, model.InCache) + ",";
+                    if (i < ProcessCount - 1)
+                        TextBox1.Text += Functions.Commands(processModels[i].Duration, processModels[i].TypeOfEvent, processModels[i].InCache) + ";";
+                    else TextBox1.Text += Functions.Commands(processModels[i].Duration, processModels[i].TypeOfEvent, processModels[i].InCache);
                 }
             }
         }
@@ -99,6 +113,71 @@ namespace ConveyorApp1
 
             if (!int.TryParse(txtNum.Text, out ProcessCount))
                 txtNum.Text = ProcessCount.ToString();
+        }
+        private void Start_Button_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                TextBox1.Background = Brushes.Transparent;
+                resultProcessModels = new List<ProcessModel>(MainWindow.ProcessCount);
+                MyText = TextBox1.Text.ToUpper();
+                
+                bool check = MyText.Contains("Т") && MyText.Contains("(") && MyText.Contains(")") && MyText.Contains(",") && MyText.Contains(";");
+                if (!check)
+                {
+                    TextBox1.Clear();
+                    resultProcessModels = null;
+                    throw new Exception("Строка введена некорректно!");                   
+                }
+                else
+                {
+                    string[] commands = MyText.Split(';');
+                    foreach (var c in commands)
+                    {
+                        resultProcessModels.Add(Functions.ConvertStringToProcessModel(c));
+                    }
+                    MessageBox.Show("Все хорошо");
+                    // рисование 
+                }
+                
+            }
+            catch
+            {
+                TextBox1.Background = Brushes.DarkRed;
+                MessageBox.Show("Произошла ошибка");
+            }
+
+            
+        }
+
+        private void cmdUp_Click_MP(object sender, RoutedEventArgs e)
+        {
+            MainWindow.Processor.MicroProcessorFreq++;
+            txtNum_MP.Text = Convert.ToString(MainWindow.Processor.MicroProcessorFreq);
+        }
+
+        private void cmdDown_Click_MP(object sender, RoutedEventArgs e)
+        {
+            if (MainWindow.Processor.MicroProcessorFreq > 1)
+            {
+                MainWindow.Processor.MicroProcessorFreq--;
+                txtNum_MP.Text = Convert.ToString(MainWindow.Processor.MicroProcessorFreq);
+            }
+        }
+
+        private void cmdUp_Click_SB(object sender, RoutedEventArgs e)
+        {
+            MainWindow.Processor.SystemBusFreq++;
+            txtNum_SB.Text = Convert.ToString(MainWindow.Processor.SystemBusFreq);
+        }
+
+        private void cmdDown_Click_SB(object sender, RoutedEventArgs e)
+        {
+            if (MainWindow.Processor.SystemBusFreq > 1)
+            {
+                MainWindow.Processor.SystemBusFreq--;
+                txtNum_SB.Text = Convert.ToString(MainWindow.Processor.SystemBusFreq);
+            }
         }
     }
 }

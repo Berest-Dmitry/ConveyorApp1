@@ -18,11 +18,11 @@ namespace ConveyorApp1
             {
                 typeOfEvent = 1;
             }
-            else if(value > 0.3 && value < 0.45)
+            else if(value > 0.3 && value < 0.55)
             {
                 typeOfEvent = 2;
             }
-            else if (value > 0.45 && value < 0.70)
+            else if (value > 0.55 && value < 0.70)
             {
                 typeOfEvent = 3;
             }
@@ -133,6 +133,35 @@ namespace ConveyorApp1
             }
 
             return result;
+        }
+
+        public static ProcessModel ConvertStringToProcessModel(string input)
+        {           
+            char d = input[0];
+            int duration = Convert.ToInt32(new string(d, 1));
+            int cache = 0;
+            int typeOfEvent = 1;
+            if (input.Contains("Н.К."))
+            {
+                cache = 0;
+            }
+            else if (input.Contains("КЭШ"))
+            {
+                cache = 1;
+            }
+            if (input.Contains("УО"))
+            {
+                typeOfEvent = 3;
+            }
+            else if (input.Contains("-"))
+            {
+                typeOfEvent = 1;
+            }
+                return new ProcessModel() {
+                TypeOfEvent = typeOfEvent,
+                Duration = duration,
+                InCache = cache
+                };
         }
     }
 }
