@@ -40,16 +40,13 @@ namespace ConveyorApp1
                 SystemBusFreq = 0,
                 MemoryFormula = 0
             };
-            // ListBox1.ItemsSource = MainWindow.ProcessCount;                              
+                             
         }   
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 
         }
-        private void ListBox_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
-        {
-            
-        }
+        
       
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -116,17 +113,32 @@ namespace ConveyorApp1
         }
         private void Start_Button_Click(object sender, RoutedEventArgs e)
         {
+            string ExcString = "";
             try
             {
                 TextBox1.Background = Brushes.Transparent;
+                txtNum_MP.Background = Brushes.Transparent;
+                txtNum_SB.Background = Brushes.Transparent;
+                txtNum_OM.Background = Brushes.Transparent;
+
                 resultProcessModels = new List<ProcessModel>(MainWindow.ProcessCount);
                 MyText = TextBox1.Text.ToUpper();
-                
+
+                if (Processor.MicroProcessorFreq < 1 || Processor.SystemBusFreq < 1 || Processor.MemoryFormula < 1)
+                {
+                    txtNum_MP.Background = Brushes.DarkRed;
+                    txtNum_SB.Background = Brushes.DarkRed;
+                    txtNum_OM.Background = Brushes.DarkRed;
+                    ExcString = "некорректные параметры ВС!";
+                    throw new Exception("Некорректные параметры ВС!");
+                }               
+
                 bool check = MyText.Contains("Т") && MyText.Contains("(") && MyText.Contains(")") && MyText.Contains(",") && MyText.Contains(";");
                 if (!check)
                 {
                     TextBox1.Clear();
                     resultProcessModels = null;
+                    ExcString = "строка команд введена некорректно!";
                     throw new Exception("Строка введена некорректно!");                   
                 }
                 else
@@ -144,7 +156,7 @@ namespace ConveyorApp1
             catch
             {
                 TextBox1.Background = Brushes.DarkRed;
-                MessageBox.Show("Произошла ошибка");
+                MessageBox.Show("Произошла ошибка: " + ExcString);
             }
 
             
@@ -152,6 +164,7 @@ namespace ConveyorApp1
 
         private void cmdUp_Click_MP(object sender, RoutedEventArgs e)
         {
+            txtNum_MP.Background = Brushes.Transparent;
             MainWindow.Processor.MicroProcessorFreq++;
             txtNum_MP.Text = Convert.ToString(MainWindow.Processor.MicroProcessorFreq);
         }
@@ -167,6 +180,7 @@ namespace ConveyorApp1
 
         private void cmdUp_Click_SB(object sender, RoutedEventArgs e)
         {
+            txtNum_SB.Background = Brushes.Transparent;
             MainWindow.Processor.SystemBusFreq++;
             txtNum_SB.Text = Convert.ToString(MainWindow.Processor.SystemBusFreq);
         }
@@ -177,6 +191,70 @@ namespace ConveyorApp1
             {
                 MainWindow.Processor.SystemBusFreq--;
                 txtNum_SB.Text = Convert.ToString(MainWindow.Processor.SystemBusFreq);
+            }
+        }
+
+        private void txtNum_MP_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (txtNum_MP == null)
+            {
+                return;
+            }
+
+            if (!int.TryParse(txtNum_MP.Text, out int result))
+            {
+                txtNum_MP.Background = Brushes.Transparent;
+                txtNum_MP.Text = MainWindow.Processor.MicroProcessorFreq.ToString();
+                MainWindow.Processor.MicroProcessorFreq = result;
+            }
+                
+            
+        }
+
+        private void txtNum_SB_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (txtNum_SB == null)
+            {
+                return;
+            }
+
+            if (!int.TryParse(txtNum_SB.Text, out int result))
+            {
+                txtNum_SB.Background = Brushes.Transparent;
+                txtNum_SB.Text = MainWindow.Processor.SystemBusFreq.ToString();
+                MainWindow.Processor.SystemBusFreq = result;
+            }
+                
+        }
+
+        private void txtNum_OM_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (txtNum_OM == null)
+            {
+                return;
+            }
+
+            if (!int.TryParse(txtNum_OM.Text, out int result))
+            {
+                txtNum_OM.Background = Brushes.Transparent;
+                txtNum_OM.Text = MainWindow.Processor.MicroProcessorFreq.ToString();
+                MainWindow.Processor.MicroProcessorFreq = result;
+            }
+        }
+
+        private void cmdUp_OM_Click(object sender, RoutedEventArgs e)
+        {
+            txtNum_OM.Background = Brushes.Transparent;
+            MainWindow.Processor.MemoryFormula++;
+            txtNum_OM.Text = Convert.ToString(MainWindow.Processor.MemoryFormula);
+        }
+
+        private void cmdDown_OM_Click(object sender, RoutedEventArgs e)
+        {
+            if (MainWindow.Processor.MemoryFormula > 1)
+            {
+                MainWindow.Processor.MemoryFormula--;
+                txtNum_OM.Text = Convert.ToString(MainWindow.Processor.MemoryFormula);
             }
         }
     }
